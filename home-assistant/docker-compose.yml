@@ -1,0 +1,28 @@
+---
+services:
+  homeassistant:
+    image: lscr.io/linuxserver/homeassistant:latest
+    container_name: homeassistant
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Pacific/Auckland
+    volumes:
+      - homeassist01:/config
+    ports:
+      - 8123:8123 #optional
+    restart: unless-stopped
+    networks:
+      default:
+        ipv4_address: 10.1.0.12
+    auth_providers:
+    - type: command_line
+      command: /config/ldap-auth.py
+      meta: true  
+networks:
+  default:
+    external: true
+    name: krak_island
+volumes:
+  homeassist01:
+    external: true

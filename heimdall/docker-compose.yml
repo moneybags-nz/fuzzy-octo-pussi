@@ -1,0 +1,25 @@
+version: "2.1"
+services:
+  heimdall:
+    image: lscr.io/linuxserver/heimdall:latest
+    container_name: heimdall
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Pacific/Auckland
+    volumes:
+      - heimdall01_data:/config
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      default:
+        ipv4_address: 10.1.0.28
+networks:
+  default:
+    external: true
+    name: krak_island
+volumes:
+  heimdall01_data:
+    external: true
